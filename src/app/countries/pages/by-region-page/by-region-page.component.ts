@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Country } from '../../interfaces/country';
+import { CountriesService } from '../../services/countries.service';
 
 @Component({
   selector: 'countries-by-region-page',
@@ -6,11 +8,21 @@ import { Component, OnInit } from '@angular/core';
   styles: [
   ]
 })
-export class ByRegionPageComponent implements OnInit {
+export class ByRegionPageComponent {
 
-  constructor() { }
+  public countries :Country[]=[];
 
-  ngOnInit(): void {
-  }
+  constructor(private countriesService:CountriesService) { }
+
+  searchByRegion(term:string):void{
+    // console.log('Aqui entra despues del search-box-component. Desde ByCapitalPageComponent');
+    // console.log({term});
+    this.countriesService.searchRegion(term).subscribe(
+      countries => {
+        this.countries = countries
+      }
+    )
+
+   }
 
 }
